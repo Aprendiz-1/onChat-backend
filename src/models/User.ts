@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
     },
+    status: {
+        type: String,
+        default: 'offline',
+    }
 });
 
 const User = mongoose.model("User", UserSchema);

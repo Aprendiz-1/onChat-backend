@@ -23,6 +23,9 @@ class AuthUserService {
                 email: findUser.email,
             },
             process.env.JWT_SECRET,
+            {
+                expiresIn: '30d',
+            }
         );
 
         return {
