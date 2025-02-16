@@ -5,6 +5,7 @@ import { ListUserController } from "./controllers/user/ListUserController";
 import { CreateConversationController } from "./controllers/conversation/CreateConversationController";
 import { ListMessagesController } from "./controllers/messages/ListMessagesController";
 import { DetailUserController } from "./controllers/user/DetailUserController";
+import { ListConversationsController } from "./controllers/conversation/ListConversationsController";
 import passport from "passport";
 
 const router = Router();
@@ -18,6 +19,8 @@ router.get('/get-user', passport.authenticate('jwt', {session: false}), new Deta
 router.get('/contacts', new ListUserController().handle);
 
 router.post('/conversation', new CreateConversationController().handle);
+
+router.get('/list-conversations', passport.authenticate('jwt', {session: false}), new ListConversationsController().handle);
 
 router.get('/messages', new ListMessagesController().handle);
 

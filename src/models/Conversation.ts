@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const ConversationSchema = new mongoose.Schema({
-    participants: [String],
-});
+    participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
+});;
 
 const Conversation = mongoose.model('Conversation', ConversationSchema);
 export { Conversation };
