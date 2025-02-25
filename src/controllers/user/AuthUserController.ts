@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserProps } from "./CreateUserController";
 import { AuthUserService } from "../../services/user/AuthUserService";
 
-
 class AuthUserController {
     async handle(req: Request, res: Response): Promise<any> {
         try {
