@@ -3,7 +3,7 @@ import { CreateConversationService } from "../../services/conversation/CreateCon
 import mongoose from "mongoose";
 
 export type ConversationProps = {
-    participants: mongoose.Types.ObjectId[];
+    participants: string[];
 }
 
 class CreateConversationController {

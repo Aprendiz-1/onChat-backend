@@ -23,12 +23,12 @@ router.put('/update-user', passportAuth, new EditUserController().handle);
 
 router.get('/contacts', passportAuth, new ListUserController().handle);
 
-router.post('/create-conversation', new CreateConversationController().handle);
+router.post('/create-conversation', passportAuth, new CreateConversationController().handle);
 
-router.get('get-conversation', passportAuth, new GetConversationController().handle);
+router.post('/get-conversation', passportAuth, new GetConversationController().handle);
 
 router.get('/list-conversations', passportAuth, new ListConversationsController().handle);
 
-router.get('/messages', new ListMessagesController().handle);
+router.get('/messages', passportAuth, new ListMessagesController().handle);
 
 export { router };

@@ -1,19 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const MessageSchema = new mongoose.Schema({
     conversationId: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "Conversation",
         required: true,
     },
     sender: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     text: {
         type: String,
         required: true,
     },
-    timestamp: { 
+    createdAt: { 
         type: Date, 
         default: Date.now 
     },

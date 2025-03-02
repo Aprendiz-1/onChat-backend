@@ -1,8 +1,8 @@
-import { ConversationProps } from "../../controllers/conversation/CreateConversationController";
 import { Conversation } from "../../models/Conversation";
+import { ConvertedConversationProps } from "./CreateConversationService";
 
 class GetConversationService {
-    async execute({participants}: ConversationProps) {
+    async execute({participants}: ConvertedConversationProps) {
         const conversation = await Conversation.findOne({
             participants: {$all: participants}
         }).populate('participants', 'name avatar status');

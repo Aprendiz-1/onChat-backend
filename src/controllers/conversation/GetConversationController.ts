@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ConversationProps } from "./CreateConversationController";
 import { GetConversationService } from "../../services/conversation/GetConversationService";
+import { ConversationProps } from "./CreateConversationController";
 import mongoose from "mongoose";
 
 class GetConversationController {

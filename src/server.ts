@@ -2,12 +2,14 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import passport from "passport";
+import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { connectDatabase } from "./database/mongoconfig";
 import { router } from "./routes";
 import { Message } from "./models/Message";
 import { User } from "./models/User";
+import { Conversation } from "./models/Conversation";
 import { ExtractJwt, Strategy } from "passport-jwt";
 
 const app = express();
@@ -40,6 +42,12 @@ app.use(router);
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
+type MessageProps = {
+  conversationId: string;
+  text: string;
+  sender: string;
+}
+
 io.on("connection", async (socket) => {
   console.log("User connected");
   const { token: user_id } = socket.handshake.auth;
@@ -48,22 +56,29 @@ io.on("connection", async (socket) => {
     await User.findByIdAndUpdate(user_id, {status: 'online'});
   }
 
-  console.log("User online!");
-
   socket.on("send_message", async (data) => {
-    const { conversationId, text, sender } = data;
+    const { conversationId, text, sender }: MessageProps = data;
+    const convertedConversationId = new mongoose.Types.ObjectId(conversationId);
+    const convertedUserId = new mongoose.Types.ObjectId(sender);
 
     const newMessage = await Message.create({
-        conversationId,
-        sender,
+        conversationId: convertedConversationId,
+        sender: convertedUserId,
         text,
+    });
+
+    await Conversation.findByIdAndUpdate(convertedConversationId, {
+      lastMessage: {
+        sender: convertedUserId,
+        text,
+        createdAt: new Date(),
+      }
     });
 
     io.to(conversationId).emit('receive_message', newMessage);
   });
 
   socket.on("disconnect", async () => {
-    console.log("User disconnected");
     if(user_id) {
       await User.findByIdAndUpdate(user_id, {status: 'offline'});
     }
