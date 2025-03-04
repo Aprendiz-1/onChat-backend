@@ -4,14 +4,14 @@ import { UserProps } from "./CreateUserController";
 import mongoose from "mongoose";
 
 export interface CompleteUserProps extends UserProps {
-  _id: mongoose.Types.ObjectId;
+  _id: string;
 }
 
 class DetailUserController {
   async handle(req: Request, res: Response): Promise<any> {
     try {
       const get_user = req.user as CompleteUserProps;
-      const user_id = get_user._id;
+      const user_id = new mongoose.Types.ObjectId(get_user._id);
 
       const detailUser = new DetailUserService();
       const user = await detailUser.execute(user_id);

@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { EditUserService } from "../../services/user/EditUserService";
 import { CompleteUserProps } from "./DetailUserController";
+import mongoose from "mongoose";
 
 class EditUserController {
     async handle(req: Request, res: Response): Promise<any> {
         try {
             const get_user = req?.user as CompleteUserProps;
-            const user_id = get_user._id;
+            const user_id = new mongoose.Types.ObjectId(get_user._id);
             const { name, nickname, email } = req.body;
 
             const editUserService = new EditUserService();

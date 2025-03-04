@@ -12,7 +12,7 @@ class ListUserService {
  
          const users = await User.find({ 
             _id: { $ne: user_id, $nin: Array.from(usersInConversation) } 
-         }).select("-password");
+         }).select("-password").limit(15);
  
          return users;
     }
