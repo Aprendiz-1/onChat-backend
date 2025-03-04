@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
     },
+    nickname: {
+        type: String,
+    },
     status: {
         type: String,
         default: 'offline',
