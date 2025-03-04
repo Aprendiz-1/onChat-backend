@@ -10,7 +10,6 @@ import { EditUserController } from "./controllers/user/EditUserController";
 import { GetConversationController } from "./controllers/conversation/GetConversationController";
 import passport from "passport";
 import { SearchUserController } from "./controllers/user/SearchUserController";
-import { SearchConversationController } from "./controllers/conversation/SearchConversationController";
 
 const router = Router();
 const passportAuth = passport.authenticate('jwt', {session: false});
@@ -32,8 +31,6 @@ router.post('/create-conversation', passportAuth, new CreateConversationControll
 router.post('/get-conversation', passportAuth, new GetConversationController().handle);
 
 router.get('/list-conversations', passportAuth, new ListConversationsController().handle);
-
-router.get('/search-conversation', passportAuth, new SearchConversationController().handle);
 
 router.get('/messages', passportAuth, new ListMessagesController().handle);
 
